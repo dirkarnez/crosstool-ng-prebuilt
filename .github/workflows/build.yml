@@ -1,0 +1,41 @@
+name: cpp-cmake-mingw-prebuilt-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'c*'
+      
+permissions:
+    contents: write
+    
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    env:
+      libraryName: crosstool-ng
+      tagName: crosstool-ng-1.28.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: crosstool-ng/crosstool-ng
+          path: crosstool-ng
+          ref: ${{ env.tagName }}
+          submodules: true
+
+
+
+$ cd crosstool-ng
+$ git checkout crosstool-ng-1.24.0
+$ ./bootstrap
+$ ./configure --prefix=${PWD}
+$ make
+$ make install
+
+ctng list-samples
+mkdir work-dir
+cd work-dir
+ct-ng help

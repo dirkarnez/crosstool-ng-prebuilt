@@ -37,11 +37,10 @@ jobs:
           export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
           ./bootstrap && \
           ./configure --help && \
-          ./configure --enable-local --prefix="$(pwd)/installation" && \
-          make && \
-          make install
+          ./configure --enable-local && \
+          make
 
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./installation/bin/ct-ng list-samples
+          ./bin/ct-ng list-samples

@@ -43,4 +43,4 @@ jobs:
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./bin/ct-ng list-samples
+          ./ct-ng list-samples

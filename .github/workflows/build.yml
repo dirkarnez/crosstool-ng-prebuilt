@@ -30,7 +30,7 @@ jobs:
           export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
           ./bootstrap && \
           ./configure --help && \
-          ./configure --enable-local --prefix=="$(pwd)/installation" && \
+          ./configure --enable-local --prefix="$(pwd)/installation" && \
           make && \
           make install
 

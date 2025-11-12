@@ -1,5 +1,8 @@
 crosstool-ng-prebuilt
 =====================
+### Documentation
+- [Setting up host OS](https://crosstool-ng.github.io/docs/os-setup/)
+
 ### Docker
 - [crosstool-ng/testing/docker/ubuntu22.04/Dockerfile at master · crosstool-ng/crosstool-ng](https://github.com/crosstool-ng/crosstool-ng/blob/master/testing/docker/ubuntu22.04/Dockerfile)
 

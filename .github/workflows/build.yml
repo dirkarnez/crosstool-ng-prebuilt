@@ -41,7 +41,11 @@ jobs:
           ./configure --enable-local && \
           make
 
+  # ct-ng menuconfig
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./ct-ng list-samples
+          ./ct-ng list-samples && \
+          ./ct-ng gcc-arm-none-eab && \
+          ./ct-ng build && \
+          ls -R

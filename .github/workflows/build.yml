@@ -46,7 +46,19 @@ jobs:
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./ct-ng list-samples && \
-          ./ct-ng arm-none-eabi && \
-          ./ct-ng build && \
+          ./ct-ng list-samples
+          
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ./ct-ng arm-none-eabi
+
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ./ct-ng build
+          
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
           ls -R

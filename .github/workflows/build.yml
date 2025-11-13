@@ -40,12 +40,13 @@ jobs:
           ./configure --help && \
           ./configure --enable-local && \
           make
+      # make install is omitted because --enable-local is used
 
   # ct-ng menuconfig
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
           ./ct-ng list-samples && \
-          ./ct-ng gcc-arm-none-eab && \
+          ./ct-ng arm-none-eabi && \
           ./ct-ng build && \
           ls -R

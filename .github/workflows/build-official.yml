@@ -40,13 +40,17 @@ jobs:
 
       - run: echo "${{ env.libraryName }}/installation/bin" >> "$GITHUB_PATH"
 
+
+# mkdir -p src
+# for sample in aarch64-unknown-linux-gnu \
+#   arm-none-eabi \
+#   arm-unknown-linux-musleabi \
+#   armv6-nommu-linux-uclibcgnueabi \
+#   x86_64-w64-mingw32; do \
+#     ct-ng $sample; \
       - run: |
           mkdir -p src
-          for sample in aarch64-unknown-linux-gnu \
-            arm-none-eabi \
-            arm-unknown-linux-musleabi \
-            armv6-nommu-linux-uclibcgnueabi \
-            x86_64-w64-mingw32; do \
+          for sample in arm-none-eabi; do \
               ct-ng $sample; \
               sed -i -e '/CT_LOG_PROGRESS_BAR/s/y$/n/' .config; \
               sed -i -e '/CT_LOCAL_TARBALLS_DIR/s/HOME/CT_TOP_DIR/' .config; \

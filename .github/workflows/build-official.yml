@@ -57,5 +57,5 @@ jobs:
               sed -i -e 's/^.*CT_DOWNLOAD_WGET_OPTIONS.*$/CT_DOWNLOAD_WGET_OPTIONS="--tries=3 -nc --progress=dot:binary --no-use-server-timestamps"/' .config; \
               ct-ng olddefconfig; \
               ct-ng source; \
-              ls
+              ct-ng build;
           done

@@ -18,7 +18,11 @@ jobs:
       libraryName: crosstool-ng
       tagName: crosstool-ng-1.28.0
     steps:
-    
+
+      - run: |
+          echo "Free space:"
+          df -h
+              
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -27,7 +31,23 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-
+          
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
       - name: Remove unnecessary directories to free up space
         run: |
           sudo rm -rf /usr/local/.ghcup
@@ -37,8 +57,7 @@ jobs:
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
 
-      - name: Build
-        run: |
+      - run: |
           echo "Free space:"
           df -h
           

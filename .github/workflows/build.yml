@@ -2,10 +2,10 @@ name: cpp-cmake-mingw-prebuilt-release-actions-workflow
 on:
   push:
     paths-ignore: "**/README.md"
-    # # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-      - 'c*'
+    # # # Sequence of patterns matched against refs/tags
+    # tags:
+    #   - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    #   - 'c*'
       
 permissions:
     contents: write
@@ -27,6 +27,15 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
+
+      - name: Remove unnecessary directories to free up space
+        run: |
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/local/lib/android/sdk/ndk
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
 
       - name: Build
         run: |

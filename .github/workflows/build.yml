@@ -3,9 +3,9 @@ on:
   push:
     paths-ignore: "**/README.md"
     # # # Sequence of patterns matched against refs/tags
-    # tags:
-    #   - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-    #   - 'c*'
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'c*'
       
 permissions:
     contents: write
@@ -111,3 +111,22 @@ jobs:
         working-directory: ${{ env.libraryName }}
         run: |
           ls -R
+
+      - shell: bash
+        working-directory: "~/x-tools"
+        run: |
+          ls -R
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: "~/x-tools/arm-none-eabi"
+          filename: "arm-none-eabi.zip"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "~/x-tools/arm-none-eabi/arm-none-eabi.zip"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}

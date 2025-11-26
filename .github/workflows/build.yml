@@ -113,8 +113,8 @@ jobs:
           ls -R
 
       - shell: bash
-        working-directory: "~/x-tools"
         run: |
+          cd "~/x-tools" && \
           ls -R
 
       - name: Archive Release

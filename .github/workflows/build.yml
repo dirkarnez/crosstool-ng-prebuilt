@@ -92,6 +92,9 @@ jobs:
       # make install is omitted because --enable-local is used
 
   # ct-ng menuconfig
+
+         mkdir ~/x-tools
+         https://shyuanliang.blogspot.com/2013/08/crosstool-ng-toolchain.html
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |

@@ -2,6 +2,10 @@ crosstool-ng-prebuilt
 =====================
 Based on https://github.com/crosstool-ng/crosstool-ng/blob/master/.github/workflows/build-toolchains.yml
 
+### To build
+- `x86_64-w64-mingw32`
+- `avr`
+
 ### Documentation
 - [Setting up host OS](https://crosstool-ng.github.io/docs/os-setup/)
 

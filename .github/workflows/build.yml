@@ -128,16 +128,14 @@ jobs:
           cd ~/x-tools && \
           ls -R
 
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          directory: "$HOME/x-tools/arm-none-eabi"
-          filename: "arm-none-eabi.zip"
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          zip -r arm-none-eabi.zip ~/x-tools/arm-none-eabi/
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "$HOME/x-tools/arm-none-eabi/arm-none-eabi.zip"
+          artifacts: "arm-none-eabi.zip"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}

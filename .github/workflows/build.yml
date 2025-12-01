@@ -80,6 +80,15 @@ jobs:
           sudo apt-get clean && \
           sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
           
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          mkdir ~/x-tools
+          
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          cd ~ && ls -R
               
       - shell: bash
         working-directory: ${{ env.libraryName }}
@@ -91,10 +100,8 @@ jobs:
           make
       # make install is omitted because --enable-local is used
 
-  # ct-ng menuconfig
-
-         mkdir ~/x-tools
-         https://shyuanliang.blogspot.com/2013/08/crosstool-ng-toolchain.html
+      # ct-ng menuconfig
+      
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
@@ -115,21 +122,22 @@ jobs:
         run: |
           ls -R
 
+# ~ cannot be quoted
       - shell: bash
         run: |
-          cd "~/x-tools" && \
+          cd ~/x-tools && \
           ls -R
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "~/x-tools/arm-none-eabi"
+          directory: "$HOME/x-tools/arm-none-eabi"
           filename: "arm-none-eabi.zip"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "~/x-tools/arm-none-eabi/arm-none-eabi.zip"
+          artifacts: "$HOME/x-tools/arm-none-eabi/arm-none-eabi.zip"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}

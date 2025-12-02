@@ -14,6 +14,9 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [ arm-none-eabi, x86_64-w64-mingw32, avr ]
     env:
       libraryName: crosstool-ng
       tagName: crosstool-ng-1.28.0
@@ -110,7 +113,7 @@ jobs:
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./ct-ng arm-none-eabi
+          ./ct-ng ${{ matrix.target }}
 
       - shell: bash
         working-directory: ${{ env.libraryName }}
@@ -131,11 +134,12 @@ jobs:
 # ~ cannot be quoted
       - shell: bash
         run: |
-          zip -r arm-none-eabi.zip ~/x-tools/arm-none-eabi/
+          cd ~/x-tools/${{ matrix.target }}/ && \
+          zip -r ${{ github.workspace }}/${{ matrix.target }}.zip .
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "arm-none-eabi.zip"
+          artifacts: "${{ matrix.target }}.zip"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}

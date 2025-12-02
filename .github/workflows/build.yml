@@ -113,7 +113,10 @@ jobs:
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
-          ./ct-ng ${{ matrix.target }}
+          ./ct-ng ${{ matrix.target }} && \
+          cat .config && \
+          echo 'CT_GCC_VERSION="10.5.0"' >> .config && \
+          cat .config
 
       - shell: bash
         working-directory: ${{ env.libraryName }}
@@ -125,12 +128,18 @@ jobs:
         run: |
           ls -R
 
+          bin/ --version && \
+
 # ~ cannot be quoted
       - shell: bash
         run: |
           cd ~/x-tools && \
           ls -R
-
+          
+      - shell: bash
+        run: |
+          ~/x-tools/${{ matrix.target }}/bin/arm-cortexa9_neon-linux-gnueabihf-gcc --version
+          
 # ~ cannot be quoted
       - shell: bash
         run: |

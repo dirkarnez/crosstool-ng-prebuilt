@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [ arm-none-eabi, x86_64-w64-mingw32, avr ]
+        target: [ arm-cortexa9_neon-linux-gnueabihf ] # arm-none-eabi, x86_64-w64-mingw32, avr ]
     env:
       libraryName: crosstool-ng
       tagName: crosstool-ng-1.28.0

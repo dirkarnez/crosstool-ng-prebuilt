@@ -99,7 +99,7 @@ jobs:
           export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
           ./bootstrap && \
           ./configure --help && \
-          ./configure --enable-local && \
+          ./configure --enable-local --with-bash=/usr/bin/bash && \
           make
       # make install is omitted because --enable-local is used
 

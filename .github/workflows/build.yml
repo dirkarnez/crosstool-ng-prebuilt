@@ -122,6 +122,7 @@ jobs:
           echo 'CT_ARCH_ARM_EABI=y' >> .config && \
           echo 'CT_ARCH_ARM_EABI_FORCE=y' >> .config && \
           echo 'CT_ARCH_ARM_TUPLE_USE_EABIHF=y' >> .config && \
+          echo 'CT_PREFIX_DIR_RO=n' >> .config && \
           cat .config
 
       - shell: bash

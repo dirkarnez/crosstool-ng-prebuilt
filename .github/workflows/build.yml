@@ -133,8 +133,6 @@ jobs:
         run: |
           ls -R
 
-          bin/ --version && \
-
 # ~ cannot be quoted
       - shell: bash
         run: |

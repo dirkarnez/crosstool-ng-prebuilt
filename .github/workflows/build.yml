@@ -138,6 +138,21 @@ jobs:
         run: |
           cd ~/x-tools && \
           ls -R
+
+
+# [Ch2 Toolchain — Embedded System學習紀錄 | by 張凱翔 | Medium](https://s-97840.medium.com/ch2-toolchain-embedded-system%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-531065e225e9)
+
+# #include <stdio.h>
+# #include <stdlib.h>
+# int main (int argc, char *argv[])
+# {
+#   printf("Hello, world!\n");
+#   return 0;
+# }
+      - shell: bash
+        run: |
+          ~/x-tools/${{ matrix.target }}/bin/arm-cortexa9_neon-linux-gnueabihf-gcc helloworld.c -o helloworld && \
+          file helloworld
           
       - shell: bash
         run: |

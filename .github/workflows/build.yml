@@ -92,14 +92,15 @@ jobs:
       - shell: bash
         run: |
           cd ~ && ls -R
-              
+
+#  --with-bash=/usr/bin/bash && \
       - shell: bash
         working-directory: ${{ env.libraryName }}
         run: |
           export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
           ./bootstrap && \
           ./configure --help && \
-          ./configure --enable-local --with-bash=/usr/bin/bash && \
+          ./configure --enable-local && \
           make
       # make install is omitted because --enable-local is used
 
@@ -142,15 +143,18 @@ jobs:
 
 # [Ch2 Toolchain — Embedded System學習紀錄 | by 張凱翔 | Medium](https://s-97840.medium.com/ch2-toolchain-embedded-system%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-531065e225e9)
 
-# #include <stdio.h>
-# #include <stdlib.h>
-# int main (int argc, char *argv[])
-# {
-#   printf("Hello, world!\n");
-#   return 0;
-# }
+
       - shell: bash
         run: |
+          cat <<EOF > helloworld.c
+          #include <stdio.h>
+          #include <stdlib.h>
+          int main (int argc, char *argv[])
+          {
+            printf("Hello, world!\n");
+            return 0;
+          }
+          EOF
           ~/x-tools/${{ matrix.target }}/bin/arm-cortexa9_neon-linux-gnueabihf-gcc helloworld.c -o helloworld && \
           file helloworld
           

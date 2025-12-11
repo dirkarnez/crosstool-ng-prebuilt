@@ -18,7 +18,7 @@ make && \
 ./ct-ng menuconfig
 ```
 
-### GCC version
+### GCC version (First check at [Index of /pub/gcc/releases/gcc-12.1.0](https://sourceware.org/pub/gcc/releases/gcc-12.1.0/))
 ```bash
 CT_GCC_VERSION="15.2.0"
 CT_GCC_MIRRORS="$(CT_Mirrors GNU gcc/gcc-${CT_GCC_VERSION}) $(CT_Mirrors sourceware gcc/releases/gcc-${CT_GCC_VERSION})"

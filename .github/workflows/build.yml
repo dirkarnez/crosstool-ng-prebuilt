@@ -93,14 +93,25 @@ jobs:
         run: |
           cd ~ && ls -R
 
-#  --with-bash=/usr/bin/bash && \
+#   && \
       - shell: bash
+        if: ${{  env.tagName != 'crosstool-ng-1.21.0' }}
         working-directory: ${{ env.libraryName }}
         run: |
           export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
           ./bootstrap && \
           ./configure --help && \
           ./configure --enable-local && \
+          make
+
+      - shell: bash
+        if: ${{  env.tagName == 'crosstool-ng-1.21.0' }}
+        working-directory: ${{ env.libraryName }}
+        run: |
+          export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
+          ./bootstrap && \
+          ./configure --help && \
+          ./configure --enable-local --with-bash=/usr/bin/bash && \
           make
       # make install is omitted because --enable-local is used
 

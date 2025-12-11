@@ -123,6 +123,9 @@ jobs:
           echo 'CT_ARCH_ARM_EABI_FORCE=y' >> .config && \
           echo 'CT_ARCH_ARM_TUPLE_USE_EABIHF=y' >> .config && \
           echo 'CT_PREFIX_DIR_RO=n' >> .config && \
+          echo 'CT_CC_GCC_VERSION="9.3.0"' >> .config && \
+          echo 'CT_CC_GCC_V_9_3_0=y' >> .config && \
+          echo 'CT_CC_gcc=y' >> .config && \
           cat .config
 
       - shell: bash

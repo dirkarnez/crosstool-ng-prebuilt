@@ -2,6 +2,21 @@ crosstool-ng-prebuilt
 =====================
 Based on https://github.com/crosstool-ng/crosstool-ng/blob/master/.github/workflows/build-toolchains.yml
 
+### Full CLI commands
+```
+git clone --recurse-submodules --branch crosstool-ng-1.28.0 crosstool-ng/crosstool-ng && \
+sudo apt-get update && \
+sudo apt-get install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \
+    python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
+    patch libstdc++6 rsync git meson ninja-build && \
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
+./bootstrap && \
+./configure --help && \
+./configure --enable-local && \
+make && \
+./ct-ng arm-cortexa9_neon-linux-gnueabihf
+./ct-ng menuconfig
+```
 ### To build
 - `x86_64-w64-mingw32`
 - `avr`

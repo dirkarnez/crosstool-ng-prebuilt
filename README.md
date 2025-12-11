@@ -17,6 +17,36 @@ make && \
 ./ct-ng arm-cortexa9_neon-linux-gnueabihf
 ./ct-ng menuconfig
 ```
+
+### GCC version
+```bash
+CT_GCC_VERSION="15.2.0"
+CT_GCC_MIRRORS="$(CT_Mirrors GNU gcc/gcc-${CT_GCC_VERSION}) $(CT_Mirrors sourceware gcc/releases/gcc-${CT_GCC_VERSION})"
+CT_GCC_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_GCC_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"
+CT_GCC_SIGNATURE_FORMAT=""
+CT_GCC_later_than_15=y
+CT_GCC_15_or_later=y
+CT_GCC_later_than_14=y
+CT_GCC_14_or_later=y
+CT_GCC_later_than_13=y
+CT_GCC_13_or_later=y
+CT_GCC_later_than_12=y
+CT_GCC_12_or_later=y
+CT_GCC_REQUIRE_12_or_later=y
+CT_GCC_later_than_11=y
+CT_GCC_11_or_later=y
+CT_GCC_later_than_10=y
+CT_GCC_10_or_later=y
+CT_GCC_later_than_9=y
+CT_GCC_9_or_later=y
+CT_GCC_later_than_8=y
+CT_GCC_8_or_later=y
+CT_GCC_later_than_7=y
+CT_GCC_7_or_later=y
+CT_GCC_later_than_6=y
+```
 ### To build
 - `x86_64-w64-mingw32`
 - `avr`

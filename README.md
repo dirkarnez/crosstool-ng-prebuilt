@@ -3,7 +3,7 @@ crosstool-ng-prebuilt
 Based on https://github.com/crosstool-ng/crosstool-ng/blob/master/.github/workflows/build-toolchains.yml
 
 ### Full CLI commands
-```
+```bash
 git clone --recurse-submodules --branch crosstool-ng-1.28.0 crosstool-ng/crosstool-ng && \
 sudo apt-get update && \
 sudo apt-get install -y gcc g++ gperf bison flex texinfo help2man make libncurses5-dev \

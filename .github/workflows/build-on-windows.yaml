@@ -1,0 +1,171 @@
+name: cpp-cmake-mingw-prebuilt-release-actions-workflow
+on:
+  push:
+    paths-ignore: "**/README.md"
+    # # # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'c*'
+      
+permissions:
+    contents: write
+    
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: [ x86_64-w64-mingw32, avr ]
+    env:
+      libraryName: crosstool-ng
+      tagName: crosstool-ng-1.28.0
+    steps:
+
+      - run: |
+          echo "Free space:"
+          df -h
+              
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+          
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
+      - name: Remove unnecessary directories to free up space
+        run: |
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/local/lib/android/sdk/ndk
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+
+      - run: |
+          echo "Free space:"
+          df -h
+          
+      - uses: actions/checkout@v4
+        with:
+          repository: crosstool-ng/crosstool-ng
+          path: ${{ env.libraryName }}
+          ref: ${{ env.tagName }}
+          submodules: true
+
+      - shell: bash
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y gcc g++ bison flex texinfo help2man make libncurses5-dev \
+              python3-dev autoconf automake libtool libtool-bin gawk wget bzip2 xz-utils unzip \
+              patch libstdc++6 rsync git meson ninja-build gperf
+              
+      - shell: bash
+        run: |
+          sudo apt-get clean && \
+          sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+          
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          mkdir ~/x-tools
+          
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          cd ~ && ls -R
+
+
+      - shell: bash
+        if: ${{  env.tagName == 'crosstool-ng-1.21.0' }}
+        working-directory: ${{ env.libraryName }}
+        run: |
+          export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
+          ./bootstrap && \
+          ./configure --help && \
+          ./configure --enable-local --with-bash=/usr/bin/bash && \
+          make
+      # make install is omitted because --enable-local is used
+
+      # ct-ng menuconfig
+      
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ./ct-ng list-samples
+          
+  # echo 'CT_GCC_VERSION="10.5.0"' >> .config && \   
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ./ct-ng ${{ matrix.target }} && \
+          cat .config
+
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ./ct-ng build
+          
+      - shell: bash
+        working-directory: ${{ env.libraryName }}
+        run: |
+          ls -R
+          
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          cd ~/x-tools && \
+          ls -R
+
+
+# [Ch2 Toolchain — Embedded System學習紀錄 | by 張凱翔 | Medium](https://s-97840.medium.com/ch2-toolchain-embedded-system%E5%AD%B8%E7%BF%92%E7%B4%80%E9%8C%84-531065e225e9)
+
+
+      # - shell: bash
+      #   run: |
+      #     cat <<EOF > helloworld.c
+      #     #include <stdio.h>
+      #     #include <stdlib.h>
+      #     int main (int argc, char *argv[])
+      #     {
+      #       printf("Hello, world!\n");
+      #       return 0;
+      #     }
+      #     EOF
+      #     ~/x-tools/${{ matrix.target }}/bin/arm-cortexa9_neon-linux-gnueabihf-gcc helloworld.c -o helloworld && \
+      #     file helloworld
+          
+      - shell: bash
+        run: |
+          ~/x-tools/${{ matrix.target }}/bin/arm-cortexa9_neon-linux-gnueabihf-gcc --version
+          
+# ~ cannot be quoted
+      - shell: bash
+        run: |
+          cd ~/x-tools/${{ matrix.target }}/ && \
+          zip -r ${{ github.workspace }}/${{ matrix.target }}.zip .
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ matrix.target }}.zip"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}

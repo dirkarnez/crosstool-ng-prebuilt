@@ -66,3 +66,6 @@ CT_GCC_later_than_6=y
 - [crosstool-ng详解【转】 - Sky&Zhang - 博客园](https://www.cnblogs.com/sky-heaven/p/13508495.html)
 - Older GCC
     - [crosstools-ng-tomato-mips/Dockerfile at master · oglops/crosstools-ng-tomato-mips](https://github.com/oglops/crosstools-ng-tomato-mips/blob/master/Dockerfile)
+
+
+<!-- Security scan triggered at 2026-09-15 09:38:34 -->
